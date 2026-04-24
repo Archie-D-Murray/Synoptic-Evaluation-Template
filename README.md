@@ -1,7 +1,7 @@
 # Synoptic Project Evaluation
 
 ## State Machine
-The core of the state machine handles updating and transitioning states handling proper exit of states before entering the new state resolving the path and resolving the states across the path. States contain basic methods like `OnUpdate(float dt)`, `Enter()` and `Exit()` which can be implemented in custom state types, with the state machine calling the methods for it. Data flows in a couple of different ways:
+The core of the state machine handles updating and transitioning states handling proper exit of states before entering the new state resolving the path and resolving the states across the path. States contain basic methods like `OnUpdate()`, `OnEnter()` and `OnExit()` which can be implemented in custom state types, with the state machine calling the methods for it. Data flows in a couple of different ways:
  - Entity specific state data that does not need to accessed via anything other than the state and maybe an injector should stay in the state type
  - State data shared across multiple enemies like attack definitions and wander ranges are part of an injector that provides data to multiple entities
  - Entity specific data that multiple states reference is added to the `StateMachineContext` allowing it to be passed around between states
@@ -50,7 +50,6 @@ Root:
  │ - RigidbodyMovementAdaptor (Movement)
  │ - AnimationAdaptor         (Animation)
  │ - StateMachineContext
- │ - PlayerInputs
  │ - Rigidbody
  │ - CapsuleCollider
  │ - Health
