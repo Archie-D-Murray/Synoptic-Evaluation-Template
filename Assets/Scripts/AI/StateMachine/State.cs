@@ -26,12 +26,14 @@ namespace AI.HSM {
             State transition = null;
             if (StateMachine.StateTransitions.ContainsKey(this)) {
                 foreach (TransitionCondition transitionCondition in StateMachine.StateTransitions.GetValueOrDefault(this)) {
+                    if (StateMachine.StatePath.Contains(transitionCondition.To)) { continue; }
                     if (transitionCondition.Evaluate()) {
                         transition = transitionCondition.To;
                     }
                 }
             }
             foreach (TransitionCondition transitionCondition in StateMachine.AnyStateTransition) {
+                if (StateMachine.StatePath.Contains(transitionCondition.To)) { continue; }
                 if (transitionCondition.Evaluate()) {
                     transition = transitionCondition.To;
                 }

@@ -12,6 +12,7 @@ namespace AI.HSM {
         public readonly Dictionary<State, State> InitialStates = new Dictionary<State, State>();
         public readonly Dictionary<State, HashSet<TransitionCondition>> StateTransitions = new Dictionary<State, HashSet<TransitionCondition>>();
         public readonly HashSet<TransitionCondition> AnyStateTransition = new HashSet<TransitionCondition>();
+        public readonly HashSet<State> StatePath = new HashSet<State>(3);
 
         protected State _root;
         public State Root => _root;
@@ -32,11 +33,16 @@ namespace AI.HSM {
             if (_started) { return; }
             _started = true;
             Root.Enter();
+            StatePath.Add(_root);
         }
 
         public void Tick(float deltaTime) {
             if (!_started) { Start(); }
             Root.Update(deltaTime);
+            StatePath.Clear();
+            for (State state = _root; state != null; state = state.ActiveChild) {
+                StatePath.Add(state);
+            }
         }
 
         public void FixedTick() {
