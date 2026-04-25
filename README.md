@@ -178,7 +178,7 @@ public class RangedState : State { /* Much ranged state */ }
 
 This state re-uses a significant amount of the base [Attack State](./Assets/Scripts/AI/States/Attack.cs) however it must use a different injector having the slight modification of being able to move once a large enough portion of the attack animation is complete to allow the enemy to attempt to close in on its target and eventually switch to melee attacks
 
-[Ranged State](./Assets/Scripts/Examples/Custom State/RangedAttack.cs)
+[Ranged State](./Assets/Scripts/Examples/Custom_State/RangedAttack.cs)
 ```cs
 // RangedState::OnUpdate()
 OnUpdate(float dt) {
