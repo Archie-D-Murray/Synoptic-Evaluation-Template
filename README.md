@@ -68,7 +68,7 @@ Injectors all sit on a single `InjectorManager` singleton that provides an easy 
 ## Custom Injector
 To make entities patrol across all patrol points and spread themselves out over available nodes a new `DistributedPatrolInjector` was created to provide this behaviour. The class uses the same implementation as the `CyclePatrolInjector` with a store listing which entities have a certain patrol point allowing them to keep track of which point they are currently at. This was done by modifying the `GetStartIndex`, `Next` and `Prev` methods along with `OnEnter` and `OnExit` removing them from the store.
 
-[Distributed Patrol Injector class](./Assets/Scripts/Examples/Custom Injectors/DistributingPatrolInjector.cs)
+[Distributed Patrol Injector class](./Assets/Scripts/Examples/Custom_Injectors/DistributingPatrolInjector.cs)
 
 ```cs
 // _contextToPos: Dictionary<StateMachineContext, int> - Maps context to current patrol target index
