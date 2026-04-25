@@ -81,7 +81,7 @@ To make entities patrol across all patrol points and spread themselves out over 
 public int GetStartIndex(StateMachineContext context, int index) {
     int newIndex = ++_nextPatrolIndex % _patrolPoints.Length;
 
-_contextToPos.Add(context, newIndex);
+    _contextToPos.Add(context, newIndex);
     _currentPatrols[newIndex].PatrolMembers.Add(context);
 
     return newIndex;
@@ -166,7 +166,7 @@ public class RangedProjectile : MonoBehaviour {
     }
 }
 ```
-[Ranged Projectile full class](./Assets/Scripts/Examples/Custom State/RangedProjectile.cs)
+[Ranged Projectile full class](./Assets/Scripts/Examples/Custom_State/RangedProjectile.cs)
 ![Ranged Attack Adaptor + Injector](./Share/Ranged_Injector_Manager.png)
 
 The first step towards implementing the state itself is to define a new state type inheriting the `State` class: 
