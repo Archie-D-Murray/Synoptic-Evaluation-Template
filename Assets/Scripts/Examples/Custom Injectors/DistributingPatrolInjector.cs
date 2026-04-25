@@ -35,7 +35,10 @@ namespace AI.Examples {
 
         [SerializeField] private bool _showPatrolPointsDebug = false;
 
+        ///<summary>All patrol points, showing entities matching a current target</summary>
         [SerializeField] Patrol[] _currentPatrols;
+
+        ///<summary>Mapping of state machine contexts to current patrol index</summary>
         Dictionary<StateMachineContext, int> _contextToPos;
 
         ///<summary>Patrol points</summary>

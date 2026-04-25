@@ -49,7 +49,6 @@ Root:
  │ - RangedDetectorAdaptor    (Detector)
  │ - RigidbodyMovementAdaptor (Movement)
  │ - AnimationAdaptor         (Animation)
- │ - StateMachineContext
  │ - Rigidbody
  │ - CapsuleCollider
  │ - Health
@@ -63,3 +62,199 @@ Root:
 Injectors all sit on a single `InjectorManager` singleton that provides an easy way to supply entities with injector references, this would likely need to be extracted to provide per enemy type injectors but it simplifies setup for the example massively.
 
 ![Injectors](./Share/Injectors.png)
+
+# Implementation Guide
+
+## Custom Injector
+To make entities patrol across all patrol points and spread themselves out over available nodes a new `DistributedPatrolInjector` was created to provide this behaviour. The class uses the same implementation as the `CyclePatrolInjector` with a store listing which entities have a certain patrol point allowing them to keep track of which point they are currently at. This was done by modifying the `GetStartIndex`, `Next` and `Prev` methods along with `OnEnter` and `OnExit` removing them from the store.
+
+[Distributed Patrol Injector class](./Assets/Scripts/Examples/Custom Injectors/DistributingPatrolInjector.cs)
+
+```cs
+// _contextToPos: Dictionary<StateMachineContext, int> - Maps context to current patrol target index
+// _currentPatrols: Patrol[] - Array of patrol values (index is patrol index) containing list of patrol members
+
+///<summary>Get starting patrol point</summary>
+///<param name="context">Entity context</param>
+///<param name="index">Patrol index</param>
+///<returns>New patrol index</returns>
+public int GetStartIndex(StateMachineContext context, int index) {
+    int newIndex = ++_nextPatrolIndex % _patrolPoints.Length;
+
+_contextToPos.Add(context, newIndex);
+    _currentPatrols[newIndex].PatrolMembers.Add(context);
+
+    return newIndex;
+}
+
+///<summary>Get next patrol index wrapped to patrol points length</summary>
+///<param name="context">Entity context</param>
+///<param name="index">Patrol index</param>
+///<returns>Next patrol index</returns>
+public int Next(StateMachineContext context, int index) {
+    int newIndex = (index + 1) % _patrolPoints.Length;
+
+    _currentPatrols[index].PatrolMembers.Remove(context);
+    _currentPatrols[newIndex].PatrolMembers.Add(context);
+    _contextToPos[context] = newIndex;
+
+    return newIndex;
+}
+```
+
+This then replaced the `CyclePatrolInjector` in the injector manager, meaning entities now use the new injector which manages their starting index to distribute them across the patrol points.
+
+## Custom State
+Implementing a state requires a lot more work than an injector as it interacts with a significantly larger number of systems. Data wise, the only difference is the attack data meaning a new attack adaptor can be implemented and then used with the existing `AttackInjector` implementation defining a second ranged version with different parameters - the injector manager needed a new ranged injector reference of type `AttackInjector`.
+```cs
+[DefaultExecutionOrder(-99)]
+public class InjectorManager : Singleton<InjectorManager> {
+
+    [SerializeField] public IIdleInjector Idle;
+    [SerializeField] public IWanderInjector Wander;
+    [SerializeField] public IPatrolInjector Patrol;
+    [SerializeField] public IChaseInjector Chase;
+    [SerializeField] public IAttackInjector Attack;
+    [SerializeField] public IAttackInjector Ranged; // New ranged injector
+}
+```
+
+A new attack adaptor handling ranged attacks was then added along with a very simple script to handle the velocity and collision of the spawned projectile. The adaptor contains a reference to the projectile to spawn along with some simple settings like speed, damage and lifetime, with the other parameters coming through the `AttackContext`.
+
+```cs
+[Serializable]
+public class RangedAttackAdaptor : AttackAdaptor {
+
+    [SerializeField] private RangedProjectile _projectile;
+    [SerializeField] private LayerMask _mask;
+    [SerializeField] private float _damage = 4.0f;
+    [SerializeField] private float _lifeTime = 5.0f;
+    [SerializeField] private float _speed = 5.0f;
+
+    public override void OnEvent(AttackContext context) {
+        UnityEngine.Object.Instantiate<RangedProjectile>(_projectile, context.Origin + context.Direction * 0.5f, Quaternion.identity)
+            .Fire(context.Direction, _lifeTime, _speed, _damage, context.Entity.gameObject);
+    }
+}
+
+public class RangedProjectile : MonoBehaviour {
+
+    // Rest of class omitted but file is linked below...
+
+    public void Fire(Vector3 direction, float lifeTime, float speed, float damage, LayerMask mask, GameObject owner = null) {
+        transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        _owner = owner;
+        InitRigidbody().linearVelocity = transform.forward * speed;
+        _damage = damage;
+        _lifeTime = lifeTime;
+        _layer = mask;
+    }
+
+    private void FixedUpdate() {
+        _lifeTime -= Time.fixedDeltaTime;
+
+        if (_lifeTime <= 0) {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider hit) {
+        if (hit.gameObject != _owner && hit.TryGetComponent(out IDamageable damageable)) {
+            damageable.Damage(new DamageSource(_damage, _owner, hit.gameObject));
+            Destroy(gameObject);
+        }
+    }
+}
+```
+[Ranged Projectile full class](./Assets/Scripts/Examples/Custom State/RangedProjectile.cs)
+![Ranged Attack Adaptor + Injector](./Share/Ranged_Injector_Manager.png)
+
+The first step towards implementing the state itself is to define a new state type inheriting the `State` class: 
+
+```cs
+[System.Serializable]
+public class RangedState : State { /* Much ranged state */ }
+```
+
+This state re-uses a significant amount of the base [Attack State](./Assets/Scripts/AI/States/Attack.cs) however it must use a different injector having the slight modification of being able to move once a large enough portion of the attack animation is complete to allow the enemy to attempt to close in on its target and eventually switch to melee attacks
+
+[Ranged State](./Assets/Scripts/Examples/Custom State/RangedAttack.cs)
+```cs
+// RangedState::OnUpdate()
+OnUpdate(float dt) {
+    // { Attacking logic + queue drain... }
+
+    if (normalizedAttackTime >= _context.RangedMovementLockout || !_isAttacking) {
+        _context.Animator.Play(AIAnimationType.Locomotion);
+        TryUpdateDestination();
+    }
+    _context.Animator.SetFloat(Adapters.AIAnimationParam.Speed, _context.Movement.NormalizedSpeed);
+}
+```
+
+Now this just needs to be wired up, we need a new type of state in the `AIState` enum - this can be done using the `Assets/AI/Recreate State Enums` action or just adding to the base enum. The states in the `StateMachineContext` need to be added to with a new definition for ranged with the root state as its parent to ensurethe new state is created during initialisation. To do this, the state factory needs to be given a definition for the ranged state. This is done through a custom state definition:
+
+```cs
+public class RangedStateDefinition : IStateDefinition {
+    public void InitFactory(StateFactory factory) {
+        factory.AddStateDefinition(new StateFactoryDefinition(AIState.Ranged, StateCreators.CreateRanged));
+    }
+
+    public void InitInjectors(StateMachineContext ctx) {
+        ctx.IdleInjector = InjectorManager.Instance.Idle;
+        ctx.WanderInjector = InjectorManager.Instance.Wander;
+        ctx.PatrolInjector = InjectorManager.Instance.Patrol;
+        ctx.ChaseInjector = InjectorManager.Instance.Chase;
+        ctx.AttackInjector = InjectorManager.Instance.Attack;
+        ctx.RangedInjector = InjectorManager.Instance.Ranged;
+        ctx.IdleInjector.ContextInit(ctx);
+        ctx.WanderInjector.ContextInit(ctx);
+        ctx.PatrolInjector.ContextInit(ctx);
+        ctx.ChaseInjector.ContextInit(ctx);
+        ctx.AttackInjector.ContextInit(ctx);
+        ctx.RangedInjector.ContextInit(ctx);
+    }
+
+    public void InitTransitions(StateMachineContext ctx) {
+        // Same transitions as ManagerStateDefinitions
+
+        // New logic for different states based on distance from target
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Chase],
+            ctx[AIState.Attack],
+            new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackInjector.AttackRange(ctx))));
+
+        // Chase
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Chase],
+            ctx[AIState.Ranged],
+            new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.RangedInjector.AttackRange(ctx))));
+
+        // Attack
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Attack],
+            ctx[AIState.Chase],
+            new LambdaPredicate(() => ctx.AttackInjector.UnableToAttack(ctx)));
+
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Attack],
+            ctx[AIState.Ranged],
+            new LambdaPredicate(() =>
+                ctx.ChaseInjector.InAttackRange(ctx, ctx.RangedInjector.AttackRange(ctx)) &&
+                !ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackInjector.AttackRange(ctx))));
+
+        // Ranged
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Ranged],
+            ctx[AIState.Chase],
+            new LambdaPredicate(() => ctx.RangedInjector.UnableToAttack(ctx)));
+
+        ctx.StateMachine.AddStateTransition(
+            ctx[AIState.Ranged],
+            ctx[AIState.Attack],
+            new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackInjector.AttackRange(ctx))));
+
+    }
+}
+```
+![Ranged State Machine Context](./Share/Ranged_State_Context.png)
