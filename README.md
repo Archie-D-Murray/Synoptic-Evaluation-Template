@@ -1,13 +1,13 @@
 # Synoptic Project Evaluation
 
 ## State Machine
-The core of the state machine handles updating and transitioning states handling proper exit of states before entering the new state resolving the path and resolving the states across the path. States contain basic methods like `OnUpdate()`, `OnEnter()` and `OnExit()` which can be implemented in custom state types, with the state machine calling the methods for it. Data flows in a couple of different ways:
+The core of the state machine handles updating and transitioning states including proper exit of states before entering the new state, finding the path to the new state and resolving the entering and exiting of states along the path. States contain basic methods like `OnUpdate()`, `OnEnter()` and `OnExit()` which can be implemented in custom state types, with the state machine calling the methods for it. Data flows in a couple of different ways:
  - Entity specific state data that does not need to accessed via anything other than the state and maybe an injector should stay in the state type
  - State data shared across multiple enemies like attack definitions and wander ranges are part of an injector that provides data to multiple entities
  - Entity specific data that multiple states reference is added to the `StateMachineContext` allowing it to be passed around between states
 
 ## State Machine Context
-The state machine context is a large context object holding all base references states may need and all the states, transitions and any extra references the states may need. Most states take a reference in the constructor allowing states to do things like move the entity and control its animations. This should be extended with any reference an entity may need no matter the type, while seemingly wasteful, it was elected to go this route where a small amount of unique data will be wasted rather than have to store some inherited type and to a large amount of casting up and down.
+The state machine context is a large context object holding all core references states may need like movement or animation adaptors. It also contains all the states, transitions and any extra references the states may need like a user defined attack range. Most states take a reference in the constructor allowing states to do things like move the entity and control its animations. This should be extended with any reference an entity may need no matter the type, while seemingly wasteful, it was elected to go this route where a small amount of unique data will be wasted rather than have to store some inherited type and to a large amount of casting up and down.
 
 ## Transitions
 Transitions are defined inside a class that provides a set of methods that are called upon initialisation of the state machine. The `IStateDefinition` interface provides methods like `InitInjectors` and `InitTransitions` providing the `StateMachineContext` for the states to be defined for. It also provides a method `InitFactory` for adding new custom states to the state factories and how they are constructed. Transitions are defined using a function that is evaluated to determine if the transition should happen, transitions can either be independent of the current state or specific to the current state. Some examples transition situations have below have been provided:
@@ -167,6 +167,7 @@ public class RangedProjectile : MonoBehaviour {
 }
 ```
 [Ranged Projectile full class](./Assets/Scripts/Examples/Custom_State/RangedProjectile.cs)
+
 ![Ranged Attack Adaptor + Injector](./Share/Ranged_Injector_Manager.png)
 
 The first step towards implementing the state itself is to define a new state type inheriting the `State` class: 
