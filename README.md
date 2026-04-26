@@ -19,6 +19,9 @@ The final piece of the puzzle is to add injectors to supply states with relevant
 
 # Template Project Walkthrough
 
+## Task
+The task for this evaluation is available at [TASK.md](./TASK.md) but it is recommended to read the state machine explanation and base project explanation beforehand
+
 ## Player Setup:
 The root player has a `PlayerInputs` component along with a `PlayerController` to handle movement with an underlying `Rigidbody` and `CapsuleCollider` providing a valid physics settings. It will also have a `Health` component allowing the player to be attacked by enemies. This is available as a prefab in the Assets/Prefabs folder for easy setup.
 
@@ -68,7 +71,7 @@ Injectors all sit on a single `InjectorManager` singleton that provides an easy 
 ## Custom Injector
 To make entities patrol across all patrol points and spread themselves out over available nodes a new `DistributedPatrolInjector` was created to provide this behaviour. The class uses the same implementation as the `CyclePatrolInjector` with a store listing which entities have a certain patrol point allowing them to keep track of which point they are currently at. This was done by modifying the `GetStartIndex`, `Next` and `Prev` methods along with `OnEnter` and `OnExit` removing them from the store.
 
-[Distributed Patrol Injector class](./Assets/Scripts/Examples/Custom_Injectors/DistributingPatrolInjector.cs)
+[Distributed Patrol Injector class](./Assets/Scripts/Examples/CustomInjectors/DistributingPatrolInjector.cs)
 
 ```cs
 // _contextToPos: Dictionary<StateMachineContext, int> - Maps context to current patrol target index
@@ -166,7 +169,7 @@ public class RangedProjectile : MonoBehaviour {
     }
 }
 ```
-[Ranged Projectile full class](./Assets/Scripts/Examples/Custom_State/RangedProjectile.cs)
+[Ranged Projectile full class](./Assets/Scripts/Examples/CustomState/RangedProjectile.cs)
 
 ![Ranged Attack Adaptor + Injector](./Share/Ranged_Injector_Manager.png)
 
@@ -179,7 +182,7 @@ public class RangedState : State { /* Much ranged state */ }
 
 This state re-uses a significant amount of the base [Attack State](./Assets/Scripts/AI/States/Attack.cs) however it must use a different injector having the slight modification of being able to move once a large enough portion of the attack animation is complete to allow the enemy to attempt to close in on its target and eventually switch to melee attacks
 
-[Ranged State](./Assets/Scripts/Examples/Custom_State/RangedAttack.cs)
+[Ranged State](./Assets/Scripts/Examples/CustomState/RangedAttack.cs)
 ```cs
 // RangedState::OnUpdate()
 OnUpdate(float dt) {

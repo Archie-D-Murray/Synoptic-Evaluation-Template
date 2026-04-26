@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using AI.HSM;
 
 namespace AI.Examples {
@@ -29,6 +31,14 @@ namespace AI.Examples {
     }
 
     public class RangedStateDefinition : IStateDefinition {
+
+        public IEnumerable<AIState> RequiredStates() {
+            foreach (AIState state in StateDefinitions.BasicStates) {
+                yield return state;
+            }
+
+            yield return AIState.Ranged;
+        }
 
         public void InitFactory(StateFactory factory) {
             factory.AddStateDefinition(new StateFactoryDefinition(AIState.Ranged, StateCreators.CreateRanged));
