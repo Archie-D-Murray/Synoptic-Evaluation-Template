@@ -67,7 +67,7 @@ namespace AI.HSM {
         });
         public Vector3 Position => transform.position;
 
-        [SerializeReference, SubclassSelector] private IStateDefinition _definition = new DefaultStateDefinitions();
+        [SerializeReference, SubclassSelector] private IStateDefinition _definition = StateMachineContext.GetDefault();
         [SerializeField] private AIStateView[] _states = new AIStateView[] { new AIStateView(AIState.Root, AIState.None) };
         private Dictionary<AIState, int> _lookup = new Dictionary<AIState, int>();
 
@@ -193,6 +193,14 @@ namespace AI.HSM {
         ///<summary>Forwards FixedUpdate to state machine</summary>
         private void FixedUpdate() {
             StateMachine.FixedTick();
+        }
+        
+        private static IStateDefinition GetDefault() {
+#if AI_EXAMPLES
+            return new AI.Examples.RangedStateDefinition();
+#else
+            return new DefaultStateDefinitions();
+#endif
         }
     }
 }

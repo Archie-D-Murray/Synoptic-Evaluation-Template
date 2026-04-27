@@ -684,6 +684,22 @@ PrefabInstance:
       propertyPath: 'managedReferences[831756941911392325]'
       value: Assembly-CSharp AI.Examples.RangedStateDefinition
       objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[2].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[2].StateName
+      value: Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[2].AnimationType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.947
