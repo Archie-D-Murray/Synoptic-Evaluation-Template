@@ -22,6 +22,10 @@ namespace AI.Examples {
         Inputs _input;
 
         private void Start() {
+            if (_input != null) {
+                _input.Disable();
+                _input.Dispose();
+            }
             _input = new Inputs();
 
             _input.Player.Move.started += OnMove;

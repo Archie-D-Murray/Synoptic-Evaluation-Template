@@ -106,7 +106,7 @@ namespace AI.Adapters {
 
                 if (distance <= 0.01f) {
                     _rb.linearVelocity = Vector3.zero;
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((_target - _rb.position).WithY(0).normalized, Vector3.up), _turnSpeed * Time.fixedDeltaTime);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(transform.forward.WithY(0).normalized, Vector3.up), _turnSpeed * Time.fixedDeltaTime);
                     return Vector3.zero;
                 }
 

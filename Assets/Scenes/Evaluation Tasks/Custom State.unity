@@ -127,6 +127,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].StateName
+      value: Locomotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].StateName
+      value: Punch
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].AnimationType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].AnimationType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -599,6 +627,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].StateName
+      value: Locomotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].StateName
+      value: Punch
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].AnimationType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].AnimationType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -656,9 +712,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _definition
+      value: 831756969516728395
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _states.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _states.Array.data[5].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _states.Array.data[5].Parent
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: 'managedReferences[831756969516728393]'
+      value: Assembly-CSharp AI.HSM.StationaryEnemyDefinition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: 'managedReferences[831756969516728395]'
+      value: Assembly-CSharp AI.HSM.BasicStateDefintion
+      objectReference: {fileID: 0}
     - target: {fileID: 4789793390133652307, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: m_Name
       value: Flag Bearer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203370851286597481, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5502302267755220930, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5506922009047285871, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -700,6 +788,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5965269594787343440, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _animations.Array.data[1].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -713,6 +805,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -770,6 +866,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3545846226533307490, guid: f03fdd36f21d78de2b6928b8c699adc3, type: 3}
+      propertyPath: _canMove
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4338234132106973073, guid: f03fdd36f21d78de2b6928b8c699adc3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -827,6 +927,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].Layer
+      value: Base Layer
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].StateName
+      value: Locomotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].StateName
+      value: Punch
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[0].AnimationType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 463691506033908150, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _animations.Array.data[1].AnimationType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4

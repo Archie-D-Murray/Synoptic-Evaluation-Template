@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using AI.Examples;
 using AI.Injectors;
 
 namespace AI.HSM {
@@ -13,6 +14,18 @@ namespace AI.HSM {
         public void InitFactory(StateFactory factory) { }
         public void InitInjectors(StateMachineContext context);
         public void InitTransitions(StateMachineContext context);
+    }
+
+    [Serializable]
+    public class BasicStateDefintion : IStateDefinition {
+        public IEnumerable<AIState> RequiredStates() { return new AIState[] { AIState.Root, AIState.Idle }; }
+        public void InitFactory(StateFactory factory) { }
+        public void InitInjectors(StateMachineContext context) {
+            context.IdleInjector = InjectorManager.Instance.Idle;
+        }
+        public void InitTransitions(StateMachineContext context) {
+
+        }
     }
 
     [Serializable]

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AI.Adapters {
 
-    public enum AIAnimationType { None, Locomotion, Attack, Ranged, Dead }
+    public enum AIAnimationType { None, Locomotion, Attack, Ranged, Dead, Cast }
     public enum AIAnimationParam { X, Y, Z, Speed, Crouch }
 
     [Serializable]
@@ -42,8 +42,8 @@ namespace AI.Adapters {
             _animator = GetComponentInChildren<Animator>();
             _animLookup = new Dictionary<AIAnimationType, int>(_animations.Length);
             foreach (Animation anim in _animations) {
-                if (anim.StateName.Trim() == string.Empty) {
-                    _animLookup.Add(anim.AnimationType, Animator.StringToHash(anim.StateName));
+                if (anim.Layer.Trim() == string.Empty) {
+                    _animLookup.Add(anim.AnimationType, Animator.StringToHash($"Base Layer.{anim.StateName}"));
                 } else {
                     _animLookup.Add(anim.AnimationType, Animator.StringToHash($"{anim.Layer}.{anim.StateName}"));
                 }
