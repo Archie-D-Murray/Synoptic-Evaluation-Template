@@ -79,7 +79,7 @@ namespace AI.HSM {
         }
     }
 
-    ///<summary>Represents a lambda as a predicate</summary>
+    ///<summary>Evaluates a random chance - not stable across multiple transitions</summary>
     public class RandomChancePredicate : IPredicate {
         private readonly float _chance;
 
@@ -89,6 +89,26 @@ namespace AI.HSM {
 
         public bool Evaluate() {
             return UnityEngine.Random.value <= _chance;
+        }
+    }
+
+    ///<summary>Evaluates a random change once per frame - can be used in multiple transitions</summary>
+    public class StableChangePredicate : IPredicate {
+        private readonly float _chance;
+        private int _lastFrame = 0;
+        private bool _result = false;
+
+        public StableChangePredicate(float chance) {
+            _chance = chance;
+        }
+
+        public bool Evaluate() {
+            if (UnityEngine.Time.frameCount > _lastFrame) {
+                _lastFrame = UnityEngine.Time.frameCount;
+                _result = UnityEngine.Random.value <= _chance;
+            }
+
+            return _result;
         }
     }
 

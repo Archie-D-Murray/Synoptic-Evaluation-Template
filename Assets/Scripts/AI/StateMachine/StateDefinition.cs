@@ -5,17 +5,34 @@ using AI.Examples;
 using AI.Injectors;
 
 namespace AI.HSM {
+
+    ///<summary>Static collection of commonly reused state lists</summary>
     public static class StateDefinitions {
         public static AIState[] BasicStates = new AIState[] { AIState.Root, AIState.Idle, AIState.Wander, AIState.Patrol, AIState.Chase, AIState.Attack };
     }
 
+    ///<summary>Representation of state definitions for a state machine</summary>
     public interface IStateDefinition {
+
+        ///<summary>Gets the collection of required states for a state definition</summary>
+        ///<returns>Collection of AIState objects that can be used to create AIStateViews from contents</returns>
         public IEnumerable<AIState> RequiredStates() { return StateDefinitions.BasicStates; }
+
+        ///<summary>Allows for adding extra factory definitions</summary>
+        ///<param name="factory">Factory to modify</param>
         public void InitFactory(StateFactory factory) { }
+
+        ///<summary>Allows for assigning references to injectors in context</summary>
+        ///<param name="context">Context to initialise injectors for</param>
+        ///<remarks>It is recommended to call injector.ContextInit() here</remarks>
         public void InitInjectors(StateMachineContext context);
+
+        ///<summary>Sets up transitions for state machine - make sure to also pass initial states for any parent states</summary>
+        ///<param name="context">Context to initialise transitions for</param>
         public void InitTransitions(StateMachineContext context);
     }
 
+    ///<summary>Basic definition for an entity that just idles - useful as testing value only</summary>
     [Serializable]
     public class BasicStateDefintion : IStateDefinition {
         public IEnumerable<AIState> RequiredStates() { return new AIState[] { AIState.Root, AIState.Idle }; }
@@ -24,10 +41,11 @@ namespace AI.HSM {
             context.IdleInjector = InjectorManager.Instance.Idle;
         }
         public void InitTransitions(StateMachineContext context) {
-
+            context.StateMachine.AddInitialState(context[AIState.Root], context[AIState.Idle]);
         }
     }
 
+    ///<summary>Default definition for an entity that idles then either wanders or patrols and chases enemies attacking if in range</summary>
     [Serializable]
     public class DefaultStateDefinitions : IStateDefinition {
         public void InitInjectors(StateMachineContext ctx) {
@@ -50,16 +68,19 @@ namespace AI.HSM {
 
         public void InitTransitions(StateMachineContext ctx) {
             ctx.StateMachine.AddInitialState(ctx[AIState.Root], ctx[AIState.Idle]);
+
+            StableChangePredicate wanderOrPatrol = new StableChangePredicate(0.5f);
+
             // Idle
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
                 ctx[AIState.Wander],
-                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new RandomChancePredicate(0.5f)));
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), wanderOrPatrol));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
                 ctx[AIState.Patrol],
-                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new RandomChancePredicate(0.5f)));
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new NotPredicate(wanderOrPatrol)));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
@@ -98,6 +119,7 @@ namespace AI.HSM {
         }
     }
 
+    ///<summary>Stationary enemy that attack when in range and otherwise idles</summary>
     [Serializable]
     public class StationaryEnemyDefinition : IStateDefinition {
 

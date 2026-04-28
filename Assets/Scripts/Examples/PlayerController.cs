@@ -70,6 +70,7 @@ namespace AI.Examples {
 
         private void Start() {
             _inputs.OnLockStateChange += SetCanMove;
+            GetComponent<Health>().OnDamage += HUD.Instance.OnDamage;
         }
 
         private void Update() {

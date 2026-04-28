@@ -188,7 +188,7 @@ MonoBehaviour:
   _camX: 0
   _camMin: -85
   _camMax: 85
-  _canMove: 0
+  _canMove: 1
   _localCameraOffset: {x: 0, y: 0, z: -5}
   _input: {x: 0, y: 0, z: 0}
   _targetDir: {x: 0, y: 0, z: 0}

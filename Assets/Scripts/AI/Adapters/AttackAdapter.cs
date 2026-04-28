@@ -4,6 +4,24 @@ using UnityEngine;
 
 namespace AI.Adapters {
 
+    ///<summary>Class representing context data for an attack - extend as needed</summary>
+    [System.Serializable]
+    public class AttackContext {
+        public Vector3 Origin;
+        public Vector3 Direction;
+        public AnimationClip Clip;
+        public StateMachineContext Entity;
+        public State State;
+
+        public AttackContext(StateMachineContext context) {
+            Entity = context;
+            State = null;
+            Clip = null;
+            Direction = Vector3.zero;
+            Origin = Vector3.zero;
+        }
+    }
+
     ///<summary>Base for all attacks to derive from</summary>
     ///<summary></summary>
     ///<summary>
@@ -39,24 +57,6 @@ namespace AI.Adapters {
     ///</code>
     ///</example>
     ///</summary>
-
-    [System.Serializable]
-    public class AttackContext {
-        public Vector3 Origin;
-        public Vector3 Direction;
-        public AnimationClip Clip;
-        public StateMachineContext Entity;
-        public State State;
-
-        public AttackContext(StateMachineContext context) {
-            Entity = context;
-            State = null;
-            Clip = null;
-            Direction = Vector3.zero;
-            Origin = Vector3.zero;
-        }
-    }
-
     [System.Serializable]
     public abstract class AttackAdaptor {
         [SerializeField] protected float _normalizedTime;

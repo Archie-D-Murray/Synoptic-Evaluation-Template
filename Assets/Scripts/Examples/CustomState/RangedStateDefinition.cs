@@ -4,32 +4,7 @@ using AI.HSM;
 
 namespace AI.Examples {
 
-    public class TempStateDefinition : IStateDefinition {
-
-        public void InitInjectors(StateMachineContext ctx) { }
-
-        public void InitTransitions(StateMachineContext ctx) {
-            ctx.StateMachine.AddInitialState(ctx[AIState.Root], ctx[AIState.Idle]);
-
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Idle],
-                ctx[AIState.Wander],
-                new AndPredicate(
-                    new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)),
-                    new RandomChancePredicate(0.5f)));
-
-            float range = ctx.AttackInjector.AttackRange(ctx);
-
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Attack],
-                ctx[AIState.Patrol],
-                new OrPredicate(
-                    new LambdaPredicate(() => ctx.Detector.JustLostTarget),
-                    new NotPredicate(
-                        new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, range)))));
-        }
-    }
-
+    ///<summary>Extended ranged definition for an entity that idles then either wanders or patrols and chases enemies attacking if in range or using ranged attacks if not in melee range</summary>
     public class RangedStateDefinition : IStateDefinition {
 
         public IEnumerable<AIState> RequiredStates() {
@@ -61,17 +36,19 @@ namespace AI.Examples {
 
         public void InitTransitions(StateMachineContext ctx) {
             ctx.StateMachine.AddInitialState(ctx[AIState.Root], ctx[AIState.Idle]);
+
+            StableChangePredicate wanderOrPatrol = new StableChangePredicate(0.5f);
+
             // Idle
-            // Disabled for distributed test
-            // ctx.StateMachine.AddStateTransition(
-            //     ctx[AIState.Idle],
-            //     ctx[AIState.Wander],
-            //     new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new RandomChancePredicate(0.5f)));
-            //
+            ctx.StateMachine.AddStateTransition(
+                ctx[AIState.Idle],
+                ctx[AIState.Wander],
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), wanderOrPatrol));
+
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
                 ctx[AIState.Patrol],
-                new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)));
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new NotPredicate(wanderOrPatrol)));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],

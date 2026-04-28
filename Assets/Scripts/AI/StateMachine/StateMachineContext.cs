@@ -11,6 +11,7 @@ using Utilities;
 
 namespace AI.HSM {
 
+    ///<summary>States represented in editor - state is initialised on start</summary>
     [Serializable]
     public class AIStateView {
         public AIState Key;
@@ -23,13 +24,6 @@ namespace AI.HSM {
             Parent = parent;
             State = null;
         }
-    }
-
-    class StateNode {
-        public StateNode Parent;
-        public State Value;
-        public AIState Type;
-        public List<StateNode> Children;
     }
 
     ///<summary>Base context for the state machine</summary>
@@ -92,6 +86,7 @@ namespace AI.HSM {
             }
         }
 
+        ///<summary>Performs necessary validation logic whenever component is creator or modified in inspector</summary>
         private void OnValidate() {
             Animator = GetComponentInChildren<AnimationAdapter>();
             Movement = GetComponentInChildren<MovementAdapter>();
@@ -102,6 +97,7 @@ namespace AI.HSM {
                 AttackContext.Entity = this;
             }
 
+            // Handle adding states if necessary provided a valid definition
             if (_definition != null) {
                 HashSet<AIState> tempLookup = new HashSet<AIState>(_states.Length);
                 foreach (AIStateView view in _states) {
@@ -194,13 +190,10 @@ namespace AI.HSM {
         private void FixedUpdate() {
             StateMachine.FixedTick();
         }
-        
+
+        ///<summary>Gets default state definition - called when object is created</summary>
         private static IStateDefinition GetDefault() {
-#if AI_EXAMPLES
-            return new AI.Examples.RangedStateDefinition();
-#else
-            return new DefaultStateDefinitions();
-#endif
+            return new AI.Examples.ManagerStateDefinitions();
         }
     }
 }

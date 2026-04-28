@@ -9,6 +9,8 @@ using Utilities;
 
 namespace AI.Examples {
 
+    ///<summary>Used for attacking enemies that are in range while not in melee range</summary>
+    ///<summary>Will start moving towards its target once close enough</summary>
     [System.Serializable]
     public class RangedState : State {
 
@@ -21,15 +23,22 @@ namespace AI.Examples {
             _context = context;
         }
 
+        ///<summary>Propagates OnEnter to injector and sets attack context</summary>
         protected override void OnEnter() {
             _context.RangedInjector.OnEnter(_context);
 
             _context.AttackContext.State = this;
             _context.AttackContext.Origin = _context.Position.Offset(y: 1.5f);
             _context.AttackContext.Direction = (_context.Detector.TargetPosition - _context.Position).normalized;
+            _elapsedAttackTime = 0.0f;
         }
 
+        ///<summary>Update state handling attacking and ticking pending attacks</summary>
+        ///<summary>Additionally reenables movement after a lockout period</summary>
+        ///<param name="dt">Time since last update - used to update attack duration and queued attacks</param>
         protected override void OnUpdate(float dt) {
+            _context.AttackContext.Origin = _context.Position.Offset(y: 1.5f);
+            _context.AttackContext.Direction = (_context.Detector.TargetPosition - _context.Position).normalized;
 
             _context.RangedInjector.OnUpdate(_context, dt);
 
@@ -76,27 +85,42 @@ namespace AI.Examples {
             _context.Animator.SetFloat(Adapters.AIAnimationParam.Speed, _context.Movement.NormalizedSpeed);
         }
 
+        ///<summary>Moves back to moving animation + propagates OnExit to injector</summary>
         protected override void OnExit() {
+            _elapsedAttackTime = 0.0f;
             _context.RangedInjector.OnExit(_context);
             _context.Animator.Play(AIAnimationType.Locomotion);
         }
 
+        ///<summary>Updates target destination if necessary</summary>
         private void TryUpdateDestination() {
-            if (!_context.Movement.PathPending && Vector3.Distance(_context.Movement.Target, _context.Detector.TargetPosition) <= 0.1f) {
+            if (!_context.Movement.PathPending) {
                 _context.Movement.SetDestination(_context.Detector.TargetPosition);
             }
         }
     }
 
+    ///<summary>Attack Adaptor respresenting a ranged attack</summary>
     [Serializable]
     public class RangedAttackAdaptor : AttackAdaptor {
 
+        ///<summary>Projectile to spawn</summary>
         [SerializeField] private RangedProjectile _projectile;
+
+        ///<summary>Valid object layers to damage</summary>
         [SerializeField] private LayerMask _mask;
+
+        ///<summary>Damage amount</summary>
         [SerializeField] private float _damage = 4.0f;
+
+        ///<summary>Projectile lifetime</summary>
         [SerializeField] private float _lifeTime = 5.0f;
+
+        ///<summary>Projectile speed</summary>
         [SerializeField] private float _speed = 5.0f;
 
+        ///<summary>Attack Adaptor respresenting a ranged attack</summary>
+        ///<param name="context">Attack context to initialse attack parameters with</param>
         public override void OnEvent(AttackContext context) {
             UnityEngine.Object.Instantiate<RangedProjectile>(_projectile, context.Origin + context.Direction * 0.5f, Quaternion.identity)
                 .Fire(context.Direction, _lifeTime, _speed, _damage, context.Entity.gameObject);

@@ -8,6 +8,7 @@ using UnityEngine;
 using Utilities;
 
 namespace AI.Examples {
+    ///<summary>Singleton to store shared injectors</summary>
     [DefaultExecutionOrder(-99)]
     public class InjectorManager : Singleton<InjectorManager> {
 
@@ -31,7 +32,8 @@ namespace AI.Examples {
 
             if (attackInjectors.Length == 2) {
                 int first = attackInjectors[0].AttackRange(null) < attackInjectors[1].AttackRange(null) ? 0 : 1;
-                Attack = attackInjectors[first++];
+                Attack = attackInjectors[first];
+                first = ++first % 2;
                 Ranged = attackInjectors[first];
             } else {
                 Attack = attackInjectors[0];
@@ -39,6 +41,7 @@ namespace AI.Examples {
             }
         }
 
+        ///<summary>Initialise all injectors once</summary>
         protected override void OnAwake() {
             Idle.Init();
             Wander.Init();
@@ -49,6 +52,7 @@ namespace AI.Examples {
         }
     }
 
+    ///<summary>State definition with no wander for patrol injector testing</summary>
     [Serializable]
     public class DistributedStateDefinitions : IStateDefinition {
 
@@ -141,6 +145,7 @@ namespace AI.Examples {
         }
     }
 
+    ///<summary>State definition assuming the InjectorManager to provide shared injectors</summary>
     [Serializable]
     public class ManagerStateDefinitions : IStateDefinition {
 
@@ -159,16 +164,19 @@ namespace AI.Examples {
 
         public void InitTransitions(StateMachineContext ctx) {
             ctx.StateMachine.AddInitialState(ctx[AIState.Root], ctx[AIState.Idle]);
+
+            StableChangePredicate wanderOrPatrol = new StableChangePredicate(0.5f);
+
             // Idle
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
                 ctx[AIState.Wander],
-                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new RandomChancePredicate(0.5f)));
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), wanderOrPatrol));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
                 ctx[AIState.Patrol],
-                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new RandomChancePredicate(0.5f)));
+                new AndPredicate(new LambdaPredicate(() => ctx.IdleInjector.DoneIdling(ctx)), new NotPredicate(wanderOrPatrol)));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Idle],
