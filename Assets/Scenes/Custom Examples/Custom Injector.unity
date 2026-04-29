@@ -127,6 +127,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _definition
+      value: 831757033870458948
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[2].Key
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[3].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[4].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[5].Key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: 'managedReferences[831757033870458948]'
+      value: Assembly-CSharp AI.Examples.DistributedStateDefinitions
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -696,6 +724,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _definition
+      value: 831757033870458949
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[2].Key
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[3].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[4].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[5].Key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: 'managedReferences[831757033870458949]'
+      value: Assembly-CSharp AI.Examples.DistributedStateDefinitions
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -753,6 +809,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _definition
+      value: 831757033870458947
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[2].Key
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[3].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[4].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[5].Key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: 'managedReferences[831757033870458947]'
+      value: Assembly-CSharp AI.Examples.DistributedStateDefinitions
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -867,6 +951,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _definition
+      value: 831757033870458946
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[2].Key
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[3].Key
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[4].Key
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _states.Array.data[5].Key
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 362070625877811400, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: 'managedReferences[831757033870458946]'
+      value: Assembly-CSharp AI.Examples.DistributedStateDefinitions
+      objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4

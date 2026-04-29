@@ -110,12 +110,6 @@ namespace AI.Examples {
                 ctx[AIState.Attack],
                 new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackRange)));
 
-            // Chase
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Chase],
-                ctx[AIState.Ranged],
-                new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.RangedRange)));
-
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Chase],
                 ctx[AIState.Idle],
@@ -126,21 +120,6 @@ namespace AI.Examples {
                 ctx[AIState.Attack],
                 ctx[AIState.Chase],
                 new LambdaPredicate(() => ctx.AttackInjector.UnableToAttack(ctx)));
-
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Attack],
-                ctx[AIState.Ranged],
-                new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.RangedRange) && !ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackRange)));
-
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Ranged],
-                ctx[AIState.Chase],
-                new LambdaPredicate(() => !ctx.ChaseInjector.InAttackRange(ctx, ctx.RangedRange)));
-
-            ctx.StateMachine.AddStateTransition(
-                ctx[AIState.Ranged],
-                ctx[AIState.Attack],
-                new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackRange)));
 
         }
     }
