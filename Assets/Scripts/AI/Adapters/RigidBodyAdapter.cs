@@ -97,7 +97,7 @@ namespace AI.Adapters {
                 cumulative += dir * _directionWeights[i];
             }
 
-            velocity = cumulative.normalized * velocity.WithY(0).magnitude;
+            velocity = cumulative.normalized * velocity.WithY(0).magnitude + Vector3.up * velocity.y;
         }
 
         private Vector3 GetBaseMovement() {
