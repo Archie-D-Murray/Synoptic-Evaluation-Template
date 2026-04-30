@@ -29,6 +29,12 @@ public class AbilityStateDefinition : IStateDefinition {
             return false;
         });
 
+        ctx.IdleInjector = InjectorManager.Instance.Idle;
+        ctx.WanderInjector = InjectorManager.Instance.Wander;
+        ctx.PatrolInjector = InjectorManager.Instance.Patrol;
+        ctx.ChaseInjector = InjectorManager.Instance.Chase;
+        // Assign ability injector - this is stored on the injector manager
+
         ctx.IdleInjector.ContextInit(ctx);
         ctx.WanderInjector.ContextInit(ctx);
         ctx.PatrolInjector.ContextInit(ctx);

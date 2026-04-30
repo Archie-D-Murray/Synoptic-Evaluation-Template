@@ -195,6 +195,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _curHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _maxHealthOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5751404206856972313, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -792,6 +800,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _curHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _maxHealthOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5751404206856972313, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_Name
       value: Enemy (4)
@@ -894,6 +910,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5965269594787343440, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _default
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965269594787343440, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: _animations.Array.data[1].Layer
       value: Base Layer
       objectReference: {fileID: 0}
@@ -952,6 +972,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1595201230110132815, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _curHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _maxHealthOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5751404206856972313, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
@@ -1100,6 +1128,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _curHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019962107584316354, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
+      propertyPath: _maxHealthOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5751404206856972313, guid: 10550184630926bf8b6f7db6d8f23f0e, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1186,21 +1222,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d8fbfebb0505c42bd0f7893180293e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ability:
-    rid: 831757057266810954
+  _abilities:
+  - rid: 831757057266810963
   _range: 2
+  _cooldown: 2
   references:
     version: 2
     RefIds:
-    - rid: 831757057266810954
+    - rid: 831757057266810963
       type: {class: HealAdaptor, ns: , asm: Assembly-CSharp}
       data:
-        _normalizedTime: 0
+        _normalizedTime: 0.5
         _healAmount: 5
         _range: 5
         _mask:
           serializedVersion: 2
-          m_Bits: 0
+          m_Bits: 64
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

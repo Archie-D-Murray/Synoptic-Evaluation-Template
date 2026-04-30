@@ -7,9 +7,9 @@ using Utilities;
 [System.Serializable]
 public class AbilityState : State {
 
-    private float _timer = 0.0f;
+    private float _elapsedAttackTime = 0.0f;
     private bool _attackPending = false;
-    private PriorityQueue<AttackAdaptor, float> _queue;
+    private PriorityQueue<AttackAdaptor, float> _queue = new PriorityQueue<AttackAdaptor, float>(1);
     private readonly StateMachineContext _context;
 
     public static State Create(StateMachineContext context, StateMachine stateMachine, State parent) {
@@ -26,6 +26,7 @@ public class AbilityState : State {
     }
 
     protected override void OnUpdate(float dt) {
+        _context.AttackContext.Origin = _context.Position.Offset(y: 1.5f);
 
         _context.AbilityInjector.OnUpdate(_context, dt);
 
@@ -33,7 +34,7 @@ public class AbilityState : State {
             _context.AbilityInjector.ResetCooldown(_context);
             _context.AbilityInjector.StartCooldown(_context);
 
-            // Start timer + enqueue attack with its normalized time
+            // Start incrementing _elapsedAttackTime + flag _attackPending + enqueue attack with its normalized time
         }
 
         // Update timer if running
