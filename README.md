@@ -57,7 +57,6 @@ Root:
  │ - Health
  │
  └── Model:
-        - AnimationController
         - Animator
 ```
 
