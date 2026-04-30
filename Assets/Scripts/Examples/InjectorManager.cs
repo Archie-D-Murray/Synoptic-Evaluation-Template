@@ -18,12 +18,14 @@ namespace AI.Examples {
         [SerializeField] public IChaseInjector Chase;
         [SerializeField] public IAttackInjector Attack;
         [SerializeField] public IAttackInjector Ranged;
+        [SerializeField] public IAbilityInjector Ability;
 
         private void OnValidate() {
             Idle = GetComponent<IIdleInjector>();
             Wander = GetComponent<IWanderInjector>();
             Patrol = GetComponent<IPatrolInjector>();
             Chase = GetComponent<IChaseInjector>();
+            Ability = GetComponent<IAbilityInjector>();
             IAttackInjector[] attackInjectors = GetComponents<IAttackInjector>();
 
             if (attackInjectors.Length == 0) {
@@ -49,6 +51,7 @@ namespace AI.Examples {
             Chase.Init();
             Attack.Init();
             Ranged.Init();
+            Ability.Init();
         }
     }
 

@@ -43,6 +43,7 @@ namespace AI.Adapters {
                 float dist = float.MaxValue;
                 for (int i = 0; i < count; i++) {
                     if (_found[i].transform.ContainsParentInHierarchy(transform.root)) { continue; }
+                    if (!_filter.Invoke(_found[i].gameObject)) { continue; }
                     if (_unique.Add(_found[i].transform)) {
                         float distance = (_found[i].transform.position - transform.position).sqrMagnitude;
                         if (dist > distance) {

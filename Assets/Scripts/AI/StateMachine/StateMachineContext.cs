@@ -46,6 +46,7 @@ namespace AI.HSM {
         /// Injectors added by examples \\\
         /// --------------------------- \\\
         public IAttackInjector RangedInjector;
+        public IAbilityInjector AbilityInjector;
 
         public MovementAdapter Movement;
         public AnimationAdapter Animator;

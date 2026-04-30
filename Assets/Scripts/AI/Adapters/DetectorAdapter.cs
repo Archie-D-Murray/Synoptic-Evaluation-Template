@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 namespace AI.Adapters {
@@ -20,6 +22,19 @@ namespace AI.Adapters {
 
         ///<summary>Was the target lost between now and last FindTarget call</summary>
         public bool JustLostTarget => _justLostTarget;
+
+        ///<summary>Filter to apply to effected objects</summary>
+        protected Func<GameObject, bool> _filter = delegate { return true; };
+
+        ///<summary>Sets filter - null will remove filter from being applied</summary>
+        ///<param name="filter">Filter</param>
+        public void SetFilter(Func<GameObject, bool> filter) {
+            if (_filter == null) {
+                _filter = delegate { return true; };
+            } else {
+                _filter = filter;
+            }
+        }
 
         ///<summary>Do we have a non null target</summary>
         public bool HasTarget() {

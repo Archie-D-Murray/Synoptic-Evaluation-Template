@@ -809,17 +809,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2335267358064717691, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: _mask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: _definition
-      value: 831756969516728395
+      value: 831757057266810956
       objectReference: {fileID: 0}
     - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: _states.Array.size
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: _states.Array.data[5].Key
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: _states.Array.data[5].Parent
@@ -832,6 +836,10 @@ PrefabInstance:
     - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: 'managedReferences[831756969516728395]'
       value: Assembly-CSharp AI.HSM.BasicStateDefintion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3584716345019423931, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
+      propertyPath: 'managedReferences[831757057266810956]'
+      value: Assembly-CSharp AbilityStateDefinition
       objectReference: {fileID: 0}
     - target: {fileID: 4789793390133652307, guid: f8bd8e5b1b4398f4597bd9c09d18be5f, type: 3}
       propertyPath: m_Name
@@ -1156,8 +1164,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 231101997210628433, guid: 54133b4fe1fc3ea4aad47825a8c96159, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8005190139005094322}
   m_SourcePrefab: {fileID: 100100000, guid: 54133b4fe1fc3ea4aad47825a8c96159, type: 3}
+--- !u!1 &8005190139005094321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 231101997210628433, guid: 54133b4fe1fc3ea4aad47825a8c96159, type: 3}
+  m_PrefabInstance: {fileID: 8005190139005094320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8005190139005094322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005190139005094321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d8fbfebb0505c42bd0f7893180293e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ability:
+    rid: 831757057266810954
+  _range: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 831757057266810954
+      type: {class: HealAdaptor, ns: , asm: Assembly-CSharp}
+      data:
+        _normalizedTime: 0
+        _healAmount: 5
+        _range: 5
+        _mask:
+          serializedVersion: 2
+          m_Bits: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

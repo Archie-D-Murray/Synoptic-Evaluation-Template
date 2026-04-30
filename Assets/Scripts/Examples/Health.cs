@@ -32,6 +32,9 @@ namespace AI.Examples {
         ///<summary>Invoked once when current health reaches 0</summary>
         public Action<DamageSource> OnDeath = delegate { };
 
+        ///<summary>Invoked once when healed - heal amount in float</summary>
+        public Action<float> OnHeal = delegate { };
+
         private void Awake() {
             if (_maxHealthOnAwake) {
                 _curHealth = _maxHealth;
@@ -62,6 +65,23 @@ namespace AI.Examples {
             }
 
             return result;
+        }
+
+        ///<summary>Recovers health (clamped)</summary>
+        ///<remarks>Will not damage if dead or full health</remarks>
+        ///<param name="amount">Heal amount</param>
+        ///<returns>Amount healed - may be lower than amount passed</returns>
+        public float Heal(float amount) {
+            if (_curHealth == 0.0f || _curHealth >= _maxHealth) {
+                return 0.0f;
+            }
+
+            amount = Mathf.Min(amount, _maxHealth - _curHealth);
+
+            _curHealth += amount;
+
+            OnHeal.Invoke(amount);
+            return amount;
         }
     }
 }
