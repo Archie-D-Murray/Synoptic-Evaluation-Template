@@ -51,7 +51,10 @@ namespace AI.Examples {
             Chase.Init();
             Attack.Init();
             Ranged.Init();
-            Ability.Init();
+
+            if (Ability != null) {
+                Ability.Init();
+            }
         }
     }
 
