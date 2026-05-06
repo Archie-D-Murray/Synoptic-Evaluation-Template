@@ -111,7 +111,7 @@ namespace AI.Examples {
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Chase],
                 ctx[AIState.Attack],
-                new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackRange)));
+                new LambdaPredicate(() => ctx.ChaseInjector.InAttackRange(ctx, ctx.AttackInjector.AttackRange(ctx))));
 
             ctx.StateMachine.AddStateTransition(
                 ctx[AIState.Chase],
