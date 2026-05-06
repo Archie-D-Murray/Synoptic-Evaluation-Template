@@ -11,7 +11,7 @@ public class HealAdaptor : AttackAdaptor {
 
     public override void OnEvent(AttackContext context) {
         foreach (Collider collider in Physics.OverlapSphere(context.Origin, _range, _mask, QueryTriggerInteraction.Ignore)) {
-            // Check if collider has StateMachineContext and Health component
+            // Check for state machine context and health components and ensure they are not at full health before using Health.Heal
         }
     }
 }

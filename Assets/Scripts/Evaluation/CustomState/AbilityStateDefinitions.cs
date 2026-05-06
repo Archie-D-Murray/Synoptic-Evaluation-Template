@@ -39,7 +39,6 @@ public class AbilityStateDefinition : IStateDefinition {
         ctx.WanderInjector.ContextInit(ctx);
         ctx.PatrolInjector.ContextInit(ctx);
         ctx.ChaseInjector.ContextInit(ctx);
-
         // Ability Injector Context Init Here
     }
 

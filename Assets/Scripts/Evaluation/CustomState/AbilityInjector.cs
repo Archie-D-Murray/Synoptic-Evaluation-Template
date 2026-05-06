@@ -22,6 +22,9 @@ public interface IAbilityInjector : IStateInjector {
 
     ///<summary>Get cast range</summary>
     public float CastRange(StateMachineContext context);
+
+    ///<summary>Get ability cooldown</summary>
+    public float Cooldown(StateMachineContext context);
 }
 
 public class AbilityInjector : MonoBehaviour, IAbilityInjector {
@@ -43,6 +46,7 @@ public class AbilityInjector : MonoBehaviour, IAbilityInjector {
 
     ///<summary>Cooldown finished</summary>
     public bool CooldownFinished(StateMachineContext context) {
+        // Return if cooldown is finished using context.CooldownManager.Get(_abilityTimerID)
         return false;
     }
 
@@ -61,6 +65,11 @@ public class AbilityInjector : MonoBehaviour, IAbilityInjector {
         // Start cooldown timer using context.CooldownManager.Get(_abilityTimerID)
     }
 
+    ///<summary>Get ability cooldown</summary>
+    public float Cooldown(StateMachineContext context) {
+        // Get inital time of cooldown timer using context.CooldownManager.Get(_abilityTimerID)
+        return 1.0f;
+    }
     // NOTE: Unused
 
     public void Init() { }
